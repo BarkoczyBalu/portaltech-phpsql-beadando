@@ -21,7 +21,7 @@ if (isset($_POST["submit"])) {
         }
 
         header("Location: members.php");
-    } else if($existingUser === 0) {
+    } else if(mysqli_num_rows($existingUser) === 0) {
         header("Location: login.php?noUserFound=true");
         exit;
     } else {

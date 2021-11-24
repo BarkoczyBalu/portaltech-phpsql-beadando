@@ -15,7 +15,7 @@ header("Content-type: text/html; charset=utf-8");
     <div id="errors">
         <?php 
             // setcookie ("usernameCookie", "Lajos" ,time()+604800, "/" );
-            if (isset($_GET["nomatch"] || isset($_GET["noUserFound"])) {
+            if (isset($_GET["nomatch"]) || isset($_GET["noUserFound"])) {
                 if($_GET["nomatch"] === "true") {
                     echo '<h3 style="color: red;">Hibás felhasználónév/jelszó páros</h3>';
                 } else if($_GET["noUserFound"] === "true") {
@@ -24,7 +24,7 @@ header("Content-type: text/html; charset=utf-8");
             }
         ?>
     </div>
-    <form action="check.php" method="post" onSubmit="return isEmpty()">
+    <form action="check-login.php" method="post" onSubmit="return isEmpty()">
         <table>
             <tr>
                 <td>Felhasználónév:</td>
