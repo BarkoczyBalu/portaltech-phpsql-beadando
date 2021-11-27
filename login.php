@@ -41,7 +41,13 @@ header("Content-type: text/html; charset=utf-8");
             </tr>
             <tr>
                 <td colspan="2" style="text-align: right;">
-                    <input type="submit" name="submit" value="Login">
+                    <input type="submit" name="submit" value="Belépés">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p>Nincs még fiókod? Regisztrálj most!</p>
+                    <button name="register"><a href="register.php" style="text-decoration: none; color: black;">Regisztráció</a></button>
                 </td>
             </tr>
         </table>

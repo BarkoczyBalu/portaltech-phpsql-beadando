@@ -19,6 +19,7 @@ header("Content-type: text/html; charset=utf-8");
             }
         ?>
     </div>
+    
     <form action="check-register.php" method="post" onSubmit="return isEmpty()">
         <table>
             <tr>
@@ -27,7 +28,10 @@ header("Content-type: text/html; charset=utf-8");
             </tr>
             <tr>
                 <td>Jelszó:</td>
-                <td><input type="text" name="password" id="password" required></td>
+                <td><input type="text" name="password" id="password" pattern=".{5,}" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><em style="font-size: 12px;">A jelszónak min. 5 karakter hosszúnak kell lennie</em></td>
             </tr>
             <tr>
                 <td>Név:</td>
@@ -53,27 +57,30 @@ header("Content-type: text/html; charset=utf-8");
                 <td><input type="text" name="certificate" id="certificate"></td>
             </tr>
             <tr>
+                <!-- Hiba: A tömböt nem tudtam beolvasni HTML-ből másik PHP file-ba
+                    Megoldás: HTML name attribútum mögé kapcsos zárójel -->
                 <td>Érdeklődés:</td>
                 <td>
-                    <input type="checkbox" name="interests" value="Webdesign" id=""> Webdesign <br>
-                    <input type="checkbox" name="interests" value="Főzés" id=""> Főzés <br>
-                    <input type="checkbox" name="interests" value="IT tanulás" id=""> IT tanulás <br>
-                    <input type="checkbox" name="interests" value="Kézműves tárgyak készítése" id=""> Kézműves tárgyak készítése <br>
-                    <input type="checkbox" name="interests" value="Festészet" id=""> Festészet 
+                    <input type="checkbox" name="interests[]" value="Webdesign" id=""> Webdesign <br>
+                    <input type="checkbox" name="interests[]" value="Főzés" id=""> Főzés <br>
+                    <input type="checkbox" name="interests[]" value="IT tanulás" id=""> IT tanulás <br>
+                    <input type="checkbox" name="interests[]" value="Kézműves tárgyak készítése" id=""> Kézműves tárgyak készítése <br>
+                    <input type="checkbox" name="interests[]" value="Festészet" id=""> Festészet 
                 </td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align: right;">
-                    <input type="submit" name="submit" value="Login">
+                    <input type="submit" name="submit" value="Regisztráció">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button><a href="login.php" style="text-decoration: none; color: black;">Vissza</a></button>
                 </td>
             </tr>
         </table>
     </form>
 </div>
-
-<script>
-    // Még kell a jelszó ellenőrzés
-</script>
 
 </body>
 </html>

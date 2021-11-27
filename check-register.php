@@ -1,3 +1,4 @@
+<?php ob_start(); ?> 
 <?php
 header("Content-type: text/html; charset=utf-8");
 if (isset($_POST["submit"])) {
@@ -9,15 +10,19 @@ if (isset($_POST["submit"])) {
     $gender = $_POST['gender'];
     $email = $_POST['email'];
     $certificate = $_POST['certificate'];
-    //$interests array
+    $interestsString = "";
+    foreach( $_POST['interests'] as  $interest){
+        $interestsString = $interestsString.$interest."; ";
+    }
 
     $existingUser = mysqli_query($kapcsolat, "SELECT * FROM users WHERE FELHASZNALO_NEV='$username'");
      
 
     if (mysqli_num_rows($existingUser) === 0) {
         
-        $query = "INSERT INTO users (FELHASZNALO_NEV, JELSZO, USER_NEV, SZUL_DATUM, NEM, EMAIL, VEGZETTSEG, ERDEKLODES) VALUES('".$username."','".$password."','".$name."','".$date."','".$gender."','".$email."','".$certificate."','".$interests."')";
-
+        mysqli_set_charset($kapcsolat, "utf-8");
+        mysqli_query($kapcsolat,"INSERT INTO users (FELHASZNALO_NEV, JELSZO, USER_NEV, SZUL_DATUM, NEM, EMAIL, VEGZETTSEG, ERDEKLODES, ADMIN) VALUES('".$username."','".$password."','".$name."','".$date."','".$gender."','".$email."','".$certificate."','".$interestsString."','0')");
+        
         header("Location: login.php");
     }
 
