@@ -15,9 +15,6 @@ if(!$_SESSION['loggedIn'])
 <head>
     <meta charset="utf-8">
     <title>Hallgatói oldal</title>
-    <style>
-        #errors{color:red;}
-    </style>
 </head>
 <body>
 
@@ -26,43 +23,59 @@ if(!$_SESSION['loggedIn'])
     echo "Hello ".$_SESSION['username']."!<br>";
 
     require_once("connect.php");
+    $kapcsolat->set_charset("utf8");
 
     $user_query = mysqli_query($kapcsolat,"SELECT USER_ID from users where FELHASZNALO_NEV = '$_SESSION[username]'");
     $user_id = mysqli_fetch_assoc($user_query)['USER_ID'];
 ?>
 
 <a href="logout.php">Kijelentkezés</a>
-<div id ="errors"></div>
-
 
 <?php
-    $felvett_query = mysqli_query($kapcsolat,
-        "SELECT k.KURZUS_ID, k.KURZUS_NEV, k.KURZUS_LEIRAS 
-        FROM kurzusok k join kurzus_log l on k.KURZUS_ID = l.KURZUS_ID
-        where l.USER_ID = '$user_id'");
-    
-    if($felvett_query != FALSE){
-        ?>
-        <h3>Felvett kurzusok listája</h3>
-        <table>
-            <tr>
-                <td>Azonosító</td>
-                <td>Megnevezés</td>
-                <td>Leírás</td>
-            </tr>
-        <?php 
-            while($felvett_row = mysqli_fetch_assoc($felvett_query)){
-        ?>
-            <tr>
-                <td><?php echo $felvett_row["KURZUS_ID"];?></td>
-                <td><?php echo $felvett_row["KURZUS_NEV"];?></td>
-                <td><?php echo $felvett_row["KURZUS_LEIRAS"];?></td>
-            </tr>
-        </table>
-<?php
+    if(isset($_POST['submit_felvesz'])){
+        $date = date("Y-m-d");
+        $sql_felvesz="INSERT INTO kurzus_log(KURZUS_ID, USER_ID, LOG_DATUM) VALUES('$_POST[felvesz_kurzus]', '$user_id', '$date')";
+        if(!mysqli_query($kapcsolat,$sql_felvesz)){
+            die(mysqli_error($kapcsolat));
+        }
     }
-}
+    if(isset($_POST['submit_lead'])){
+        $sql_lead="DELETE FROM kurzus_log WHERE KURZUS_ID = '$_POST[lead_kurzus]' AND USER_ID = '$user_id'";
+        if(!mysqli_query($kapcsolat,$sql_lead)){
+            die(mysqli_error($kapcsolat));
+        }
+    }   
 ?>
+    <h3>Felvett kurzusok listája</h3>
+    <form action = "user.php" method = "post">
+    <table>
+         <tr>
+            <td>Lead</td>
+            <td>Azonosító</td>
+            <td>Megnevezés</td>
+            <td>Leírás</td>
+        </tr>
+    <?php 
+        $felvett_query = mysqli_query($kapcsolat,
+            "SELECT k.KURZUS_ID, k.KURZUS_NEV, k.KURZUS_LEIRAS 
+            FROM kurzusok k join kurzus_log l on k.KURZUS_ID = l.KURZUS_ID
+            where l.USER_ID = '$user_id'");  
+          
+        while($felvett_row = mysqli_fetch_assoc($felvett_query)){
+    ?>
+        <tr>
+           <td><input type ="radio" name = "lead_kurzus" value="<?php echo $felvett_row["KURZUS_ID"];?>"></td>
+           <td><?php echo $felvett_row["KURZUS_ID"];?></td>
+           <td><?php echo $felvett_row["KURZUS_NEV"];?></td>
+           <td><?php echo $felvett_row["KURZUS_LEIRAS"];?></td>
+        </tr>
+    <?php
+        }
+    ?>
+    </table>
+    <input type="submit" name="submit_lead" value="Lead"><br>
+    </form>
+
 
 <h3>Elérhető kurzusok listája</h3>
 <?php
@@ -81,7 +94,7 @@ if(!$_SESSION['loggedIn'])
     while($kurzus_row = mysqli_fetch_assoc($kurzusok_query)){
 ?>
     <tr>
-        <td><input type ="radio" value="<?php echo $kurzus_row["KURZUS_ID"];?>" name = "felvesz_kurzus"></td>
+        <td><input type ="radio" name = "felvesz_kurzus" value="<?php echo $kurzus_row["KURZUS_ID"];?>"></td>
         <td><?php echo $kurzus_row["KURZUS_ID"];?></td>
         <td><?php echo $kurzus_row["KURZUS_NEV"];?></td>
         <td><?php echo $kurzus_row["KURZUS_ERDEKLODES"];?></td>
@@ -91,20 +104,8 @@ if(!$_SESSION['loggedIn'])
     };
 ?>
 </table>
-<input type="submit" name="submit" value="Hozzáad"><br>
+<input type="submit" name="submit_felvesz" value="Felvesz"><br>
 </form>
 
-
-<?php
-if(isset($_POST['submit'])){
-    $date = date("Y-m-d");
-
-    $sql="INSERT INTO kurzus_log(KURZUS_ID, USER_ID, LOG_DATUM) VALUES('$_POST[felvesz_kurzus]', '$user_id', '$date')";
-    if(!mysqli_query($kapcsolat,$sql)){
-        die(mysqli_error($kapcsolat));
-    }
-}
-
-?>
 </body>
 </html>
