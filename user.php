@@ -34,9 +34,16 @@ if(!$_SESSION['loggedIn'])
 <?php
     if(isset($_POST['submit_felvesz'])){
         $date = date("Y-m-d");
-        $sql_felvesz="INSERT INTO kurzus_log(KURZUS_ID, USER_ID, LOG_DATUM) VALUES('$_POST[felvesz_kurzus]', '$user_id', '$date')";
-        if(!mysqli_query($kapcsolat,$sql_felvesz)){
-            die(mysqli_error($kapcsolat));
+        $felvettKurzus = mysqli_query($kapcsolat, "SELECT * FROM kurzus_log WHERE USER_ID = '$user_id' AND KURZUS_ID = '$_POST[felvesz_kurzus]'");
+        
+        if (mysqli_num_rows($felvettKurzus) === 0) {
+            $sql_felvesz="INSERT INTO kurzus_log(KURZUS_ID, USER_ID, LOG_DATUM) VALUES('$_POST[felvesz_kurzus]', '$user_id', '$date')";
+            if(!mysqli_query($kapcsolat,$sql_felvesz)){
+                die(mysqli_error($kapcsolat));
+            }
+        }
+        else{
+            echo '<h3 style="color: red;">Ezt a kurzust már felvetted!</h3>';
         }
     }
     if(isset($_POST['submit_lead'])){
