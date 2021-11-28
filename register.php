@@ -5,7 +5,7 @@ header("Content-type: text/html; charset=utf-8");
 <html>
 <head>
 <meta charset="utf-8">
-<title>Login</title>
+<title>Regisztráció</title>
 </head>
 <body>
 
@@ -61,11 +61,11 @@ header("Content-type: text/html; charset=utf-8");
                     Megoldás: HTML name attribútum mögé kapcsos zárójel -->
                 <td>Érdeklődés:</td>
                 <td>
-                    <input type="checkbox" name="interests[]" value="Webdesign" id=""> Webdesign <br>
-                    <input type="checkbox" name="interests[]" value="Főzés" id=""> Főzés <br>
-                    <input type="checkbox" name="interests[]" value="IT tanulás" id=""> IT tanulás <br>
-                    <input type="checkbox" name="interests[]" value="Kézműves tárgyak készítése" id=""> Kézműves tárgyak készítése <br>
-                    <input type="checkbox" name="interests[]" value="Festészet" id=""> Festészet 
+                    <input type="checkbox" name="interests[]" value="Webdesign"> Webdesign <br>
+                    <input type="checkbox" name="interests[]" value="Főzés"> Főzés <br>
+                    <input type="checkbox" name="interests[]" value="IT tanulás"> IT tanulás <br>
+                    <input type="checkbox" name="interests[]" value="Kézműves tárgyak készítése"> Kézműves tárgyak készítése <br>
+                    <input type="checkbox" name="interests[]" value="Festészet"> Festészet 
                 </td>
             </tr>
             <tr>

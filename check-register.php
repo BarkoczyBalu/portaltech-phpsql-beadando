@@ -1,4 +1,5 @@
-<?php ob_start(); ?> 
+<?php ob_start(); ?>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <?php
 header("Content-type: text/html; charset=utf-8");
 if (isset($_POST["submit"])) {

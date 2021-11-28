@@ -5,7 +5,7 @@ header("Content-type: text/html; charset=utf-8");
 <html>
 <head>
 <meta charset="utf-8">
-<title>Login</title>
+<title>Belépés</title>
 </head>
 <body>
 
@@ -44,6 +44,7 @@ header("Content-type: text/html; charset=utf-8");
                     <input type="submit" name="submit" value="Belépés">
                 </td>
             </tr>
+    </form>
             <tr>
                 <td colspan="2">
                     <p>Nincs még fiókod? Regisztrálj most!</p>
@@ -51,7 +52,6 @@ header("Content-type: text/html; charset=utf-8");
                 </td>
             </tr>
         </table>
-    </form>
 </div>
 
 <script>

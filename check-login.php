@@ -5,8 +5,8 @@ if (isset($_POST["submit"])) {
     require_once("connect.php");
     mysqli_set_charset($kapcsolat, "utf-8");
     $username = mysqli_real_escape_string($kapcsolat, $_POST['username']);
-    // $password = sha1(mysqli_real_escape_string($kapcsolat, $_POST['password']));
-    $password = mysqli_real_escape_string($kapcsolat, $_POST['password']);
+    $password = sha1(mysqli_real_escape_string($kapcsolat, $_POST['password']));
+    // $password = mysqli_real_escape_string($kapcsolat, $_POST['password']);
     $query_user = mysqli_query($kapcsolat, "SELECT * FROM users WHERE FELHASZNALO_NEV='$username' AND JELSZO='$password' AND ADMIN='0'");
     $query_admin = mysqli_query($kapcsolat, "SELECT * FROM users WHERE FELHASZNALO_NEV='$username' AND JELSZO='$password' AND ADMIN='1'");
     $existingUser = mysqli_query($kapcsolat, "SELECT * FROM users WHERE FELHASZNALO_NEV='$username'");
