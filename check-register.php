@@ -27,11 +27,11 @@ if (isset($_POST["submit"])) {
         mysqli_set_charset($kapcsolat, "utf-8");
         mysqli_query($kapcsolat,"INSERT INTO users (FELHASZNALO_NEV, JELSZO, USER_NEV, SZUL_DATUM, NEM, EMAIL, VEGZETTSEG, ERDEKLODES, ADMIN) VALUES('".$username."','".$password."','".$name."','".$date."','".$gender."','".$email."','".$certificate."','".$interestsString."','0')");
         
-        header("Location: login.php");
+        header("Location: login.php?regSuccess=true");
     }
 
 } else {
-    header("Location: register.php?errorMsg='true'");
+    header("Location: register.php?errorMsg=true");
     exit;
 }
 ?>
